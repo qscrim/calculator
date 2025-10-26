@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -158,11 +160,41 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                     else -> 0
                 }
             }
-            Text(
-                text = "Текущая скидка: $discountPercentage%",
-                fontSize = 14.sp,
-                modifier = Modifier.padding(start = 8.dp)
-            )
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    RadioButton(
+                        selected = discountPercentage == 3,
+                        onClick = {}
+                    )
+                    Text(text = "3%")
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    RadioButton(
+                        selected = discountPercentage == 5,
+                        onClick = {}
+                    )
+                    Text(text = "5%")
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    RadioButton(
+                        selected = discountPercentage == 7,
+                        onClick = {}
+                    )
+                    Text(text = "7%")
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    RadioButton(
+                        selected = discountPercentage == 10,
+                        onClick = {}
+                    )
+                    Text(text = "10%")
+                }
+            }
         }
     }
 }
