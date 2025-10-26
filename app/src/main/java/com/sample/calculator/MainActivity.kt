@@ -45,6 +45,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     var orderAmount by remember { mutableStateOf("") }
+    var dishCount by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier.padding(16.dp)
@@ -61,6 +62,29 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             OutlinedTextField(
                 value = orderAmount,
                 onValueChange = { newValue -> orderAmount = newValue },
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp),
+                placeholder = {
+                    Text("0")
+                },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+        }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 16.dp)
+        ) {
+            Text(
+                text = "Количество блюд:",
+                fontSize = 18.sp,
+                modifier = Modifier.weight(1f)
+            )
+            OutlinedTextField(
+                value = dishCount,
+                onValueChange = { newValue -> dishCount = newValue },
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 8.dp),
