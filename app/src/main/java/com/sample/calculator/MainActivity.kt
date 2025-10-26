@@ -137,6 +137,33 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                 textAlign = TextAlign.End
             )
         }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 16.dp)
+        ) {
+            Text(
+                text = "Скидка:",
+                fontSize = 18.sp,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            val discountPercentage = remember(dishCount) {
+                when {
+                    dishCount.isEmpty() -> 0
+                    dishCount.toIntOrNull() == null -> 0
+                    dishCount.toInt() in 1..2 -> 3
+                    dishCount.toInt() in 3..5 -> 5
+                    dishCount.toInt() in 6..10 -> 7
+                    dishCount.toInt() > 10 -> 10
+                    else -> 0
+                }
+            }
+            Text(
+                text = "Текущая скидка: $discountPercentage%",
+                fontSize = 14.sp,
+                modifier = Modifier.padding(start = 8.dp)
+            )
+        }
     }
 }
 
