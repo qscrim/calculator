@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -52,6 +53,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     var orderAmount by remember { mutableStateOf("") }
     var dishCount by remember { mutableStateOf("") }
     var tipPercentage by remember { mutableStateOf(0f) }
+    var totalAmount by remember { mutableStateOf(0.0) }
 
     Column(
         modifier = modifier.padding(16.dp)
@@ -196,6 +198,45 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                 }
             }
         }
+
+        // Кнопка расчета
+        Button(
+            onClick = {
+                val amount = orderAmount.toDoubleOrNull() ?: 0.0
+                val discountPercentage = when {
+                    dishCount.isEmpty() -> 0
+                    dishCount.toIntOrNull() == null -> 0
+                    dishCount.toInt() in 1..2 -> 3
+                    dishCount.toInt() in 3..5 -> 5
+                    dishCount.toInt() in 6..10 -> 7
+                    dishCount.toInt() > 10 -> 10
+                    else -> 0
+                }
+
+                val discountAmount = amount * discountPercentage / 100
+                val amountAfterDiscount = amount - discountAmount
+                val tipAmount = amountAfterDiscount * tipPercentage / 100
+                totalAmount = amountAfterDiscount + tipAmount
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+        ) {
+            Text(
+                text = "Рассчитать итоговую сумму",
+                fontSize = 18.sp
+            )
+        }
+
+        // Отображение результата
+        Text(
+            text = "Итоговая сумма: ${String.format("%.2f", totalAmount)}",
+            fontSize = 20.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            textAlign = TextAlign.Center
+        )
     }
 }
 
